@@ -14,6 +14,7 @@ import com.sun.rowset.CachedRowSetImpl;
 public class ServiceEntidades extends GenericDAOImpl 
 {
 
+	//Extras
 	 PreparedStatement pst=null;
 	 ResultSet         rs=null;
 	
