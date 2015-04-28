@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <!--Constantes para indicar como se va a comportar el framework, si es en modo desarrollador  -->
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+
+    <!--Hereda del paquete inicial de struts, que vienen en los jars, el slash sirve para separar en areas  -->
+    <!-- name="nombreProyecto?" -->
+    <package name="default" namespace="/" extends="struts-default">
+    
+       <!-- Si no tiene clase se le asigna el ActionSupport y si no posee metodo tambien se le asigna -->
+       <!-- el metodo execute -->
+       <action name="inicio">		
+           <!-- si no definimos el name en el result, la clase ActionSupport  le asigna el resultado success -->
+           <!-- a traves del metodo execute que le asigna -->	
+			<result>/WEB-INF/paginas/menuLogueo.jsp</result>
+		</action>
+        
+       
+        <action name="validarLogueo" class="com.resumenpit.actions.UsuarioAction" method="validarLogueo">
+	          
+	          <result name="success">/WEB-INF/paginas/principal.jsp</result>
+	          
+	          <!-- si los datos son incorretos.... -->
+	          <result name="error">/WEB-INF/paginas/logueo.jsp</result>
+	          
+	          <!-- para ver los errores, ya que la validacion lo hace el framework para los tipos de datos -->
+	          <!-- esta validacion vota un string de tipo input, ya que lo hace el framework -->
+	          <!-- Mas no la clase -->
+			  <result name="input">/WEB-INF/paginas/logueo.jsp</result>
+     
+	    </action>
+      
+                                                
+     
+        
+        <action name="registrarUsuario" class="com.resumenpit.actions.UsuarioAction" method="registrarUsuario">
+            <result>/WEB-INF/paginas/resultadoRegistroUser.jsp</result>
+            <result name="error">/WEB-INF/paginas/registrarUsuario_v1.jsp</result>
+            <result name="input">/WEB-INF/paginas/registrarUsuario_v1.jsp</result>
+        </action>
+        
+        <action name="*Usuario" class="com.resumenpit.actions.UsuarioAction" method="{1}">
+            <result name="listado">/WEB-INF/paginas/listadoUsuarios.jsp</result>
+            <result name="actualizar">/WEB-INF/paginas/actualizarUsuario.jsp</result>
+        </action>
+        
+        
+        <action name="reporte" class="com.resumenpit.actions.UsuarioAction" method="reporte">
+            <result>/WEB-INF/paginas/reportes.jsp</result>
+        </action>
+        
+        <!-- Action fantasmas con WildsCars -->
+        <action name="*">
+            <result>/WEB-INF/paginas/{1}</result>
+        </action>
+        
+        
+
+        
+        
+       <!--         
+            <action name="validarLogueo2" class="com.resumenpit.actions.UsuarioAction" method="validarLogueo2">
+            <result name="success">/WEB-INF/paginas/principal.jsp</result>
+            <result name="error">WEB-INF/paginas/logueo_v2.jsp</result>
+            <result name="input">WEB-INF/paginas/logueo_v2.jsp</result>
+        </action> -->
+      
+    </package>
+</struts>
