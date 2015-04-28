@@ -7,7 +7,7 @@
 
     <!--Constantes para indicar como se va a comportar el framework, si es en modo desarrollador  -->
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
-    <constant name="struts.devMode" value="true" />
+    <constant name="struts.devMode" value="true" /> <!-- true, si es modo desarrollador -->
 
     <!--Hereda del paquete inicial de struts, que vienen en los jars, el slash sirve para separar en areas  -->
     <!-- name="nombreProyecto?" -->

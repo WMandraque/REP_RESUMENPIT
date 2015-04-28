@@ -1,5 +1,6 @@
 package com.resumenpit.factory;
 
+import com.resumenpit.interfaces.EstadoDAO;
 import com.resumenpit.interfaces.UsuarioDAO;
 
 public abstract class DAOFactory 
@@ -13,6 +14,7 @@ public abstract class DAOFactory
 	
 	//Metodos Abstractos que la clase hija va a heredar
 	public abstract UsuarioDAO getUsuarioDAO();
+	public abstract EstadoDAO getEstadoDAO();
 	
 	
 	// Identificador para obetener la fabrica

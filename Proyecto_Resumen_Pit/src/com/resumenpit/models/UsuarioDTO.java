@@ -8,12 +8,11 @@ public class UsuarioDTO extends PersonaDTO
 
 	private String usuario;
 	private String clave;
-	private int    estado;
 	private Date   fechaAcceso;
-	
+	private EstadoDTO    estado;	
 
 
-	public UsuarioDTO(String usuario, String clave, String nombre, String apellido, int estado, Date fechaAcceso) 
+	public UsuarioDTO(String usuario, String clave, String nombre, String apellido, Date fechaAcceso, EstadoDTO estado) 
     {
 		super(nombre, apellido);
 		this.usuario = usuario;
@@ -46,11 +45,11 @@ public class UsuarioDTO extends PersonaDTO
 		this.clave = clave;
 	}
 
-	public int getEstado() {
+	public EstadoDTO getEstado() {
 		return estado;
 	}
 
-	public void setEstado(int estado) {
+	public void setEstado(EstadoDTO estado) {
 		this.estado = estado;
 	}
 

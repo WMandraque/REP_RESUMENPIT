@@ -4,63 +4,86 @@ CREATE DATABASE base;
 -- activamos la bd
 USE base;
 -- creamos las tablas
+
+DROP TABLE IF EXISTS tb_estado;
+CREATE TABLE tb_estado 
+(
+  idestado INT(11) NOT NULL,
+  descripcion VARCHAR(70) NOT NULL
+  );
+
+
 CREATE TABLE tb_usuario
 (
-usuario  char(4) NOT NULL,
-clave    char(5),
-nombre varchar(15),
-apellido varchar(15),
-facceso date  null,
-estado  int(1) DEFAULT 1
+usuario  CHAR(4) NOT NULL,
+clave    CHAR(5),
+nombre VARCHAR(15),
+apellido VARCHAR(15),
+facceso DATE  NULL,
+idestado  INT NOT NULL
 );
 
-create table tb_productos(
-idprod      char(5) not null primary key,
-descripcion varchar(30),
-precio		decimal(8,2),
-estado		boolean
+
+CREATE TABLE tb_productos
+(
+idprod      CHAR(5) NOT NULL,
+descripcion VARCHAR(30),
+precio		DECIMAL(8,2),
+idestado		int not null
 );
 
-CREATE TABLE tb_ventas(
-numvta   int(8) AUTO_INCREMENT NOT NULL primary KEY,
-fchvta  date  null,
-vendedor char(4)
+CREATE TABLE tb_ventas
+(
+numvta   INT(8) not null AUTO_INCREMENT,
+fchvta  DATE  NULL,
+vendedor CHAR(4),
+Constraint pk_tb_ventas  primary key(numvta)
 );
 
-CREATE TABLE tb_detventas(
-numvta   int(8) NOT NULL,
-idprod   char(5) not null ,
-cant     int(3)  null,
-precio   decimal(8,2)
+CREATE TABLE tb_detventas
+(
+numvta   INT NOT NULL,
+idprod   CHAR(5) NOT NULL ,
+cant     INT(3)  NULL,
+precio   DECIMAL(8,2)
 );
+
 
 
 -- creamos la pk
-ALTER TABLE tb_usuario ADD PRIMARY KEY (usuario);
-ALTER TABLE tb_detventas ADD PRIMARY KEY (numvta,idprod);
--- creamos la fk
-ALTER TABLE tb_ventas ADD foreign key (vendedor) references tb_usuario(usuario);
-ALTER TABLE tb_detventas ADD foreign key (numvta) references tb_ventas(numvta);
-ALTER TABLE tb_detventas ADD foreign key (idprod) references tb_productos(idprod);
+ALTER TABLE  tb_usuario ADD CONSTRAINT pk_tb_usuario_usuario PRIMARY KEY (usuario);
+ALTER TABLE tb_estado ADD constraint pk_tb_estado_idestado primary key(idestado);
+ALTER TABLE  tb_productos ADD constraint pk_tb_productos_idprod primary key(idprod);
 
+-- creamos los fk
+ALTER TABLE tb_ventas ADD constraint fk_tb_vendedor_usuario  foreign key (vendedor) references tb_usuario(usuario);
+alter table tb_usuario add constraint fk_tb_usuario_idestado foreign key(idestado) references tb_estado(idestado);
+ALTER TABLE tb_detventas ADD constraint fk_detventas_numvta foreign key (numvta) references tb_ventas(numvta);
+ALTER TABLE tb_detventas ADD constraint fk_detventas_idpord foreign key (idprod) references tb_productos(idprod);
+ALTER TABLE tb_productos ADD CONSTRAINT fk_tb_productos_idestado foreign key(idestado) references tb_estado(idestado);
+
+-- LLaves compuestas
+ALTER TABLE tb_detventas ADD PRIMARY KEY (numvta,idprod);
+
+
+insert into tb_estado values (1, 'Activo'), (2, 'no activo');
 -- inserts
 INSERT INTO tb_usuario 	VALUES ('U001', '10001', 'Juan', 'Perez','2014/10/01',1);
-INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso)	VALUES ('U002', '10002', 'Candy', 'Millet', curdate());
-INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso)	VALUES ('U003', '10003', 'Luisa', 'Falcon', curdate());
-INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso)	VALUES ('U004', '10004', 'Miguel', 'Pangus', curdate());
-INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso)	VALUES ('U005', '10005', 'Kevin', 'Ramirez', curdate());
-INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso)	VALUES ('U006', '10006', 'Diego', 'Mattas', curdate());
-INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso)	VALUES ('U007', '10007', 'German', 'Garmendia', curdate());
-INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso)	VALUES ('U008', '10008', 'David', 'Revila', curdate());
+INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso, idestado)	VALUES ('U002', '10002', 'Candy', 'Millet', curdate(), 1);
+INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso, idestado)	VALUES ('U003', '10003', 'Luisa', 'Falcon', curdate(), 1);
+INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso, idestado)	VALUES ('U004', '10004', 'Miguel', 'Pangus', curdate(), 1);
+INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso, idestado)	VALUES ('U005', '10005', 'Kevin', 'Ramirez', curdate(), 1);
+INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso, idestado)	VALUES ('U006', '10006', 'Diego', 'Mattas', curdate(), 1);
+INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso, idestado)	VALUES ('U007', '10007', 'German', 'Garmendia', curdate(), 1);
+INSERT INTO tb_usuario 	(usuario,clave,nombre,apellido, facceso, idestado)	VALUES ('U008', '10008', 'David', 'Revila', curdate(), 1);
 
 
 
 
-INSERT INTO tb_ventas (fchvta, vendedor) VALUES ('2014/10/01','U002');
-INSERT INTO tb_ventas (numvta,fchvta,vendedor) VALUES (02,curdate(),'U001');
+
 
 insert into tb_productos values ('P0001','Pizza familiar',35,1);
-insert into tb_productos values ('P0002','Pizza suprema',45,0);
+insert into tb_productos values ('P0002','Pizza suprema',45,1);
 insert into tb_productos values ('P0003','Pizza personal',8,1);
 insert into tb_productos values ('P0004','Pizza hawaiana',8,1);
 insert into tb_productos values ('P0005','Pizza norteña',8,1);
@@ -70,19 +93,13 @@ insert into tb_productos values ('P0008','Pizza limeña',8,1);
 insert into tb_productos values ('P0009','Pizza cuzqueña',8,1);
 insert into tb_productos values ('P0010','Pizza tarmeña',8,1);
 insert into tb_productos values ('P0011','Inca Kola',2.5,1);
-insert into tb_productos values ('P0012','Rolls',7.5,0);
+insert into tb_productos values ('P0012','Rolls',7.5,1);
+
+INSERT INTO tb_ventas (fchvta, vendedor) VALUES ('2014/10/01','U002');
+INSERT INTO tb_ventas (numvta,fchvta,vendedor) VALUES (02,curdate(),'U001');
 
 INSERT INTO tb_detventas VALUES (01,'P0001',1,35);
 INSERT INTO tb_detventas VALUES (02,'P0003',2,8);
-
-
-
-
--- consultas
-SELECT * FROM tb_usuario;
-SELECT * FROM tb_ventas;
-SELECT * FROM tb_detventas;
-
     
 
 
@@ -140,8 +157,6 @@ DELIMITER ;
 
 
 
-SELECT * FROM tb_ventas;
-SELECT * FROM tb_detventas;
 
 Call usp_registrarVenta('U001', @salida);
 select @salida;

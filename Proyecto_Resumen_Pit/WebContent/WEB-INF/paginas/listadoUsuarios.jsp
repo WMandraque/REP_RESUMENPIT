@@ -16,10 +16,13 @@
 
 </s:form>
 
-Listado de usuario
+<s:actionmessage/>
+
+<h2>Listado de usuario</h2>
+
 <s:if test="!listadoUsuarios.isEmpty">
 
-	<table>
+	<table bgcolor="yellow" border="1">
 		<tr class="titulos">
 			<td>Usuario</td>
 			<td>Clave</td>
@@ -28,6 +31,7 @@ Listado de usuario
 			<td>Fecha Acceso</td>
 			<td>Estado</td>
 			<td>Editar</td>
+			<td>Eliminar</td>
 		</tr>
 		<s:iterator value="listadoUsuarios">
 		<tr>
@@ -36,7 +40,7 @@ Listado de usuario
 			<td><s:property value="nombre"/></td>
 			<td><s:property value="apellido"/></td>
 			<td><s:property value="fechaAcceso"/></td>
-			<td><s:property value="estado"/></td>
+			<td><s:if test="estado==1">Disponible</s:if><s:else>No Disponible</s:else>
 			<td>
 			    <!-- alistamos la preparacion de un action, y le asignamos el id para llamarlo como url -->
 			    <s:url action="cargarUsuario" id="actualizar">

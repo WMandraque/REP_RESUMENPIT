@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.resumenpit.interfaces.UsuarioDAO;
+import com.resumenpit.models.EstadoDTO;
 import com.resumenpit.models.UsuarioDTO;
 import com.resumenpit.utils.GenericDAOImpl;
 
@@ -25,7 +26,10 @@ public class MySqlUsuarioDAO  extends GenericDAOImpl implements UsuarioDAO
 		try 
 		{
 			abrirConexion();
-			String sql="select * From tb_usuario where usuario=? and clave=?";
+			String sql="select * From tb_usuario as u "
+					+ "inner join tb_estado as e "
+					+ "on u.idestado=e.idestado"
+					+ " where usuario=? and clave=?";
 			pst=getConection().prepareStatement(sql);
 			pst.setString(1, usuario);
 			pst.setString(2, clave);
@@ -33,7 +37,8 @@ public class MySqlUsuarioDAO  extends GenericDAOImpl implements UsuarioDAO
 			ResultSet rs=pst.executeQuery();
 			if (rs.next()) 
 			{
-			   user=new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(6), rs.getDate(5));	
+			   EstadoDTO regEstado=new EstadoDTO(rs.getInt(7), rs.getString(8));
+			   user=new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), regEstado);	
 			}
 			
 		} 
@@ -72,6 +77,7 @@ public class MySqlUsuarioDAO  extends GenericDAOImpl implements UsuarioDAO
 			cst.setString(3, usuario.getNombre());
 			cst.setString(4, usuario.getApellido());
 			cst.setDate(5, usuario.getFechaAcceso());
+			cst.setInt(6, usuario.getEstado().getIdEstado());
 			
 	        r=cst.executeUpdate();
 		
@@ -106,12 +112,13 @@ public class MySqlUsuarioDAO  extends GenericDAOImpl implements UsuarioDAO
 		try 
 		{
 			abrirConexion();
-			String sql="select * from tb_usuario";
+			String sql="select * from tb_usuario as u inner join tb_estado as e on u.idestado=e.idestado";
 			pst=getConection().prepareStatement(sql);
 			rs=pst.executeQuery();
 			while (rs.next()) 
 			{
-			   	listadoUsuario.add(new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(6), rs.getDate(5)));
+				EstadoDTO regEstado=new EstadoDTO(rs.getInt(7), rs.getString(8));
+			   	listadoUsuario.add(new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), regEstado));
 			}
 
 		}
@@ -150,7 +157,8 @@ public class MySqlUsuarioDAO  extends GenericDAOImpl implements UsuarioDAO
 			
 			if(rs.next())
 			{
-		      usuarioX=new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(6), rs.getDate(5));
+			  EstadoDTO regEstado=new EstadoDTO(rs.getInt(7), rs.getString(8));
+		      usuarioX=new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), regEstado);
 			}
 			
 		} catch (Exception e) 
@@ -208,7 +216,8 @@ public class MySqlUsuarioDAO  extends GenericDAOImpl implements UsuarioDAO
 			rs=pst.executeQuery();
 			while (rs.next())
 			{
-				listadoUsuario.add(new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(6), rs.getDate(5)));				
+				EstadoDTO regEstado=new EstadoDTO(rs.getInt(7), rs.getString(8));
+				listadoUsuario.add(new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), regEstado));				
 			}
 			
 			

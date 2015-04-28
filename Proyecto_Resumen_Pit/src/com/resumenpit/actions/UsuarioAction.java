@@ -4,20 +4,25 @@ package com.resumenpit.actions;
 
 import java.util.List;
 
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.Preparable;
+import com.resumenpit.models.EstadoDTO;
 import com.resumenpit.models.UsuarioDTO;
+import com.resumenpit.service.EstadoService;
 import com.resumenpit.service.UsuarioServices;
 import com.resumenpit.utils.Constantes;
+
 
 // Implementamos "Preparable". Ejecuta primero el framework("intercepto prepare") 
 // para prepargar datos en el metodo
 @SuppressWarnings("serial")
 @ParentPackage("default")
-public class UsuarioAction extends ActionSupport
+public class UsuarioAction extends ActionSupport implements Preparable
 {
 
 	
@@ -27,13 +32,28 @@ public class UsuarioAction extends ActionSupport
 	//Asi poder trabajar directamente con la vista
 	//Por que los objetos declarados son los que interactuan con
 	//La vista
-	private UsuarioDTO usuario ;
+	private  UsuarioDTO usuario;
 	private  List<UsuarioDTO> listadoUsuarios;
+	private  List<EstadoDTO>  listadoEstados;
 	
 	//Metodo a implementar del implements Preparable
 	//Este metodo se ejecutara en el tiempo de frameworks que es antes de lanzar el proyecto
 	//Este metodo es parte de la clase ActionSuport
 	//Inicializa lo que querramos antes de lanzar el proyecto
+	@Override
+	public void prepare() throws Exception 
+	{
+		
+		EstadoService servEstado=new EstadoService();
+		listadoEstados=servEstado.listarEstados();
+		System.out.println("Tamaño: "+listadoEstados.size());
+		for (int i = 0; i < listadoEstados.size(); i++) 
+		{
+		  System.out.println("---->: "+listadoEstados.get(i).getIdEstado());
+		  System.out.println("---->: "+listadoEstados.get(i).getDescripcion());
+		}
+	}
+
 
 
     
@@ -111,6 +131,14 @@ public class UsuarioAction extends ActionSupport
 	
 		UsuarioServices su=new UsuarioServices();
 		listadoUsuarios=su.listadoUsuario();
+		if (listadoUsuarios.size()>0) 
+		{
+			addActionMessage("Cantidad de registros encontrados: "+listadoUsuarios.size());
+ 		}
+		else
+		{
+			addActionMessage("No se encontraron registros");
+		}
 		return "listado";
 	}
 	
@@ -127,6 +155,14 @@ public class UsuarioAction extends ActionSupport
 	{
 		UsuarioServices su=new UsuarioServices();
 		listadoUsuarios=su.buscarUsuarios(usuario.getNombre());
+		if (listadoUsuarios.size()>0) 
+		{
+			addActionMessage("Cantidad de registros encontrados: "+listadoUsuarios.size());
+ 		}
+		else
+		{
+			addActionMessage("No se encontraron registros");
+		}
 		return "listado";
 	}
 	
@@ -164,10 +200,18 @@ public class UsuarioAction extends ActionSupport
 	}
 
 
-	public void setListadoUsuarios(List<UsuarioDTO> listadoUsuarios) {
-		this.listadoUsuarios = listadoUsuarios;
+
+
+	public List<EstadoDTO> getListadoEstados() {
+		return listadoEstados;
 	}
 
+
+
+
+	public void setListadoEstados(List<EstadoDTO> listadoEstados) {
+		this.listadoEstados = listadoEstados;
+	}
 
 
 
