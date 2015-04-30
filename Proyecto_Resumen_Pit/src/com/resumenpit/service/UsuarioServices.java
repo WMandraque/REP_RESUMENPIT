@@ -37,9 +37,9 @@ public class UsuarioServices
 		return dao.eliminarUsuario(usuario);
 	}
 	
-	public List<UsuarioDTO> buscarUsuarios(String nombre)
+	public List<UsuarioDTO> buscarUsuarios(String _parametro, String _valor)
 	{
-		return dao.buscarUsuarios(nombre);
+		return dao.buscarUsuarios(_parametro, _valor);
 	}
 
 	

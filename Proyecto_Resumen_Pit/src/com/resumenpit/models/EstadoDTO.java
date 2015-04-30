@@ -1,4 +1,6 @@
 package com.resumenpit.models;
+import java.util.*;
+
 
 public class EstadoDTO 
 {
@@ -7,17 +9,18 @@ public class EstadoDTO
 	private String descripcion;
 	
 	
-	
-	public EstadoDTO(int idEstado, String descripcion) {
-		super();
-		this.idEstado = idEstado;
-		this.descripcion = descripcion;
-	}
+	private  List<UsuarioDTO> listadoUsuarios;
 
-	public EstadoDTO()
+	public List<UsuarioDTO> getListadoUsuarios() 
 	{
-		
+		return listadoUsuarios;
 	}
+	public void setListadoUsuarios(List<UsuarioDTO> listadoUsuarios) 
+	{
+		this.listadoUsuarios = listadoUsuarios;
+	}
+	
+	
 	
 	public int getIdEstado() {
 		return idEstado;

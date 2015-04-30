@@ -8,11 +8,18 @@
 </head>
 <body>
 
+<!-- Ojo:
+        Si deseas mostrar una pagina que va a tener un listado que va a jalar de la base de datos
+        y esta es implementada en un action.
+        Si es un prepare: crear un action definiendo la clase action!!!
+        Si es un metodo X definir la clase action y el metodo quien va a hacer ese listado 
+        De lo contrario si no va a mostrar nigun listado, solo redireccionar el jsp
+ -->
 <s:actionmessage/>
 
 <table>
 <tr>
-  <td> <s:a action="registrarUsuario_v1.jsp">Registrar Usuario</s:a></td>
+  <td> <s:a action="iniciar">Registrar Usuario</s:a></td><!-- !!!!!!! -->
   <td> <s:a action="">Actualizar Usuario</s:a>
   <td> <s:a action="listarUsuario">Listar Usuario</s:a>
 </tr>

@@ -8,6 +8,10 @@
 </head>
 <body>
 
+<!-- Ojo:
+        Si 
+ -->
+
 <s:form action="registrarUsuario">
 
           <s:textfield label="Usuario"    name="usuario.usuario"/>
@@ -15,14 +19,19 @@
           <s:textfield label="Nombre"     name="usuario.nombre"/>
           <s:textfield label="Apellido"   name="usuario.apellido"/>
           <s:textfield label="Fecha de Acceso" name="usuario.fechaAcceso" title="MM/dd/yyyy"/>
-          <s:select list="listadoEstados" label="Estado"  listKey="idEstado" listValue="descripcion"/>   
+          
+          <s:select list="listadoEstados" label="Estado" name="usuario.estado.idEstado" listKey="idEstado" listValue="descripcion"/>
+          
+          
+          
+          
           <s:submit value="Registrar"/>
           <s:reset value="Limpiar"/>
 
 </s:form>
 
-<s:actionmessage/>
-<s:actionerror/>
+
+
 
 
 

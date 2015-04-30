@@ -5,51 +5,47 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
 import com.resumenpit.interfaces.EstadoDAO;
 import com.resumenpit.models.EstadoDTO;
 import com.resumenpit.utils.GenericDAOImpl;
+import com.resumenpit.utils.SQLMyBatisMapper;
 
 public class MySqlEstadoDAO extends GenericDAOImpl implements EstadoDAO {
 
 	PreparedStatement pst=null;
 	ResultSet rs=null;
 	
+	
+	
 	@Override
 	public List<EstadoDTO> listarEstados() 
 	{
-		List<EstadoDTO> listadoEstado=new ArrayList<EstadoDTO>();
+		List<EstadoDTO> listadoEstados=new ArrayList<EstadoDTO>();
+		SqlSession session=new SQLMyBatisMapper().getSession().openSession();
+		
 		try 
 		{
-			abrirConexion();
-			String sql="select * from tb_estado";
-			pst=getConection().prepareStatement(sql);
-			rs=pst.executeQuery();
+			//Creamos un Objeto de tipo SqlSessionFactory e inicializamos
+			listadoEstados=session.selectList("EstadoSQL.SQL_listaEstados");
 			
-			while(rs.next())
-			{
-				listadoEstado.add(new EstadoDTO(rs.getInt(1), rs.getString(2)));
-			}
-
 		} 
 		catch (Exception e) 
 		{
-			System.out.println("Error en ");
-			
+			System.out.println("Error en listarEstados() ---> "+e);
 		}
 		finally
 		{
-			try 
-			{
-				cerrarConexion();
-				rs.close();
-				pst.close();
-			} catch (Exception e) 
-			{
-				e.printStackTrace();
-			}
-			
+		 session.close();
 		}
-		return listadoEstado;
+
+		return listadoEstados;
 	}
 
 }

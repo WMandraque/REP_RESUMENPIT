@@ -35,6 +35,11 @@
 			  <result name="input">/WEB-INF/paginas/logueo.jsp</result>
      
 	    </action>
+	    
+        
+        <action name="iniciar" class="com.resumenpit.actions.UsuarioAction">
+            <result>/WEB-INF/paginas/registrarUsuario_v1.jsp</result>
+        </action>
       
                                                 
      

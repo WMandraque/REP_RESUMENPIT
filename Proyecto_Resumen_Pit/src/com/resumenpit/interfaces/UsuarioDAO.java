@@ -12,6 +12,6 @@ public interface UsuarioDAO
 	List<UsuarioDTO> listadoUsuario();
 	UsuarioDTO buscarUsuario(String usuario); 
 	int eliminarUsuario(String usuario);	
-	List<UsuarioDTO> buscarUsuarios(String nombre);
+	List<UsuarioDTO> buscarUsuarios(String _parametro, String _valor);
 
 }

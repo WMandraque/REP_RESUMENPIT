@@ -1,6 +1,8 @@
 package com.resumenpit.models;
 
-import java.sql.Date;
+import java.util.Date;
+
+
 
 public class UsuarioDTO extends PersonaDTO
 {
@@ -10,7 +12,7 @@ public class UsuarioDTO extends PersonaDTO
 	private String clave;
 	private Date   fechaAcceso;
 	private EstadoDTO    estado;	
-
+	
 
 	public UsuarioDTO(String usuario, String clave, String nombre, String apellido, Date fechaAcceso, EstadoDTO estado) 
     {
