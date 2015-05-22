@@ -9,9 +9,31 @@
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="true" /> <!-- true, si es modo desarrollador -->
 
+    <!-- Incluimos los struts que heredan del principal -->
+    <include file="struts-usuario.xml"></include>
+
     <!--Hereda del paquete inicial de struts, que vienen en los jars, el slash sirve para separar en areas  -->
     <!-- name="nombreProyecto?" -->
     <package name="default" namespace="/" extends="struts-default">
+        
+        <result-types>
+			<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
+		</result-types>
+        
+        <interceptors>
+	        <interceptor-stack name="pitStack">
+	            <interceptor-ref name="defaultStack">
+	                <param name="prepare.excludeMethods">validarLogueo, listar, buscar, eliminar</param>
+	            </interceptor-ref>
+	        </interceptor-stack>
+	        
+	    </interceptors>
+        
+       <default-interceptor-ref name="pitStack"/>
+        
+        
+        
+
     
        <!-- Si no tiene clase se le asigna el ActionSupport y si no posee metodo tambien se le asigna -->
        <!-- el metodo execute -->
@@ -22,33 +44,17 @@
 		</action>
         
        
-        <action name="validarLogueo" class="com.resumenpit.actions.UsuarioAction" method="validarLogueo">
-	          
-	          <result name="success">/WEB-INF/paginas/principal.jsp</result>
-	          
-	          <!-- si los datos son incorretos.... -->
-	          <result name="error">/WEB-INF/paginas/logueo.jsp</result>
-	          
-	          <!-- para ver los errores, ya que la validacion lo hace el framework para los tipos de datos -->
-	          <!-- esta validacion vota un string de tipo input, ya que lo hace el framework -->
-	          <!-- Mas no la clase -->
-			  <result name="input">/WEB-INF/paginas/logueo.jsp</result>
-     
-	    </action>
+
 	    
         
-        <action name="iniciar" class="com.resumenpit.actions.UsuarioAction">
+        <action name="iniciar">
             <result>/WEB-INF/paginas/registrarUsuario_v1.jsp</result>
         </action>
       
                                                 
      
         
-        <action name="registrarUsuario" class="com.resumenpit.actions.UsuarioAction" method="registrarUsuario">
-            <result>/WEB-INF/paginas/resultadoRegistroUser.jsp</result>
-            <result name="error">/WEB-INF/paginas/registrarUsuario_v1.jsp</result>
-            <result name="input">/WEB-INF/paginas/registrarUsuario_v1.jsp</result>
-        </action>
+
         
         <action name="*Usuario" class="com.resumenpit.actions.UsuarioAction" method="{1}">
             <result name="listado">/WEB-INF/paginas/listadoUsuarios.jsp</result>

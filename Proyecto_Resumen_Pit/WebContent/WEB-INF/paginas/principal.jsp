@@ -21,7 +21,7 @@
 <tr>
   <td> <s:a action="iniciar">Registrar Usuario</s:a></td><!-- !!!!!!! -->
   <td> <s:a action="">Actualizar Usuario</s:a>
-  <td> <s:a action="listarUsuario">Listar Usuario</s:a>
+  <td> <s:a action="listarUsuario" namespace="/usuario">Listar Usuario</s:a>
 </tr>
 </table>
 

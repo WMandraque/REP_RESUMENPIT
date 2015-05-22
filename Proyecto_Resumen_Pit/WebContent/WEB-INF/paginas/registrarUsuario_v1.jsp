@@ -12,7 +12,7 @@
         Si 
  -->
 
-<s:form action="registrarUsuario">
+<s:form action="registrarUsuario" namespace="/usuario">
 
           <s:textfield label="Usuario"    name="usuario.usuario"/>
           <s:textfield label="Contraseña" name="usuario.clave"/>

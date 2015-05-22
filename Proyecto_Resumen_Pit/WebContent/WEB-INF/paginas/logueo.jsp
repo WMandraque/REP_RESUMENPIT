@@ -12,7 +12,7 @@
 <body>
 
 <center>
-<form action="validarLogueo" method="post" id="fmrLogueo">
+<s:form action="validarLogueo" method="post" id="fmrLogueo" namespace="/usuario">
 <fieldset>
 <legend>Loguin</legend>
 
@@ -38,7 +38,7 @@
 
 
 </fieldset>
-</form>
+</s:form>
 </center>
 
 </body>

@@ -15,7 +15,8 @@
           <s:textfield label="Nombre"     name="usuario.nombre"/>
           <s:textfield label="Apellido"   name="usuario.apellido"/>
           <s:textfield label="Fecha de Acceso" name="usuario.fechaAcceso" title="MM/dd/yyyy"/>
-          <s:submit value="Registrar"/>
+          <s:select label="Estado" list="listadoEstados" name="usuario.estado.idEstado" listKey="idEstado" listValue="descripcion"/>
+          <s:submit value="Actualizar"/>
           <s:reset value="Limpiar"/>
 
 </s:form>

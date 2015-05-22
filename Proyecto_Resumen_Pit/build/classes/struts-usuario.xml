@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <package name="struts-usuario" extends="default" namespace="/usuario">
+    
+             <action name="validarLogueo" class="com.resumenpit.actions.UsuarioAction" method="validarLogueo">
+	          
+	          <result type="tiles">d_principal</result>
+	          
+	          <!-- si los datos son incorretos.... -->
+	          <result name="error">/WEB-INF/paginas/logueo.jsp</result>
+	          
+	          <!-- para ver los errores, ya que la validacion lo hace el framework para los tipos de datos -->
+	          <!-- esta validacion vota un string de tipo input, ya que lo hace el framework -->
+	          <!-- Mas no la clase -->
+			  <result name="input">/WEB-INF/paginas/logueo.jsp</result>
+     
+	         </action>
+	         
+	    <action name="registrarUsuario" class="com.resumenpit.actions.UsuarioAction" method="registrarUsuario">
+            <result>/WEB-INF/paginas/resultadoRegistroUser.jsp</result>
+            <result name="error">/WEB-INF/paginas/registrarUsuario_v1.jsp</result>
+            <result name="input">/WEB-INF/paginas/registrarUsuario_v1.jsp</result>
+        </action>
+      
+    </package>
+
+
+</struts>

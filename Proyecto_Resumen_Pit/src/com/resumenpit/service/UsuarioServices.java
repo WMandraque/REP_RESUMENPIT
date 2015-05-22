@@ -12,9 +12,9 @@ public class UsuarioServices
 	DAOFactory factory=DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 	UsuarioDAO dao=factory.getUsuarioDAO();
 	
-	public UsuarioDTO validarUsuario(String usuario, String clave) 
+	public UsuarioDTO validarUsuario(UsuarioDTO _usuario) 
 	{
-		return dao.validarUsuario(usuario, clave);
+		return dao.validarUsuario(_usuario);
 	}
 	
 	public int insertarUsuario(UsuarioDTO usuario)
@@ -22,11 +22,7 @@ public class UsuarioServices
 		return dao.insertarUsuario(usuario);
 	}
 	
-	public List<UsuarioDTO> listadoUsuario()
-	{
-		return dao.listadoUsuario();
-	}
-	
+
 	public UsuarioDTO buscarUsuario(String usuario) 
 	{
 		return dao.buscarUsuario(usuario);
@@ -40,6 +36,11 @@ public class UsuarioServices
 	public List<UsuarioDTO> buscarUsuarios(String _parametro, String _valor)
 	{
 		return dao.buscarUsuarios(_parametro, _valor);
+	}
+	
+	public UsuarioDTO recuperarPasswordEmail(String _usuario, String _email)
+	{
+		return dao.recuperarPasswordEmail(_usuario, _email);
 	}
 
 	

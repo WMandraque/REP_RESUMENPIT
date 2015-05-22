@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-/mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UsuarioSQL">
+
+<resultMap type="com.resumenpit.models.UsuarioDTO" id="usuarioEstado">
+<id column="usuario" property="usuario" javaType="string"/>
+<result column="clave"   property="clave" javaType="string"/>
+<result column="nombre" property="nombre" javaType="string"/>
+<result column="apellido" property="apellido" javaType="string"/>
+<result column="facceso" property="fechaAcceso" javaType="date"/>
+<result column="correo" property="email" javaType="string"/>
+
+<association property="estado"  javaType="com.resumenpit.models.EstadoDTO">
+	 <result column="idestado"  property="idEstado"/>
+	 <result column="descripcion"  property="descripcion"/>
+</association>
+
+</resultMap>  
+
+    
+    <select id="SQL_recuperarPasswordEmail" parameterType="map" resultType="UsuarioMyBatis">
+    
+    select * from tb_usuario where usuario=#{_usuario} and email=#{_email}
+    
+    </select>
+    
+    <select id="SQL_buscarUsuario" parameterType="string" resultType="UsuarioMyBatis">
+     select * from tb_usuario where usuario=#{_usuario}
+    </select>
+    
+    <select id="SQL_listadoUsuarios" resultMap="usuarioEstado" parameterType="map">
+       
+         select 
+	         u.usuario,
+	         u.clave,
+	         u.nombre,
+	         u.apellido,
+	         u.facceso,
+	         e.idestado,
+	         e.descripcion 
+         from 
+         tb_usuario as u 
+         inner join 
+         tb_estado as e 
+         on e.idestado=u.idestado
+         where
+        <choose>
+            <when test="_parametro == 'nombre'">
+                u.nombre like #{_valor}
+            </when>
+            <when test="_parametro == 'apellido'">
+                u.apellido like #{_valor}
+            </when>
+            <otherwise>
+                u.usuario=u.usuario
+            </otherwise>
+        </choose>
+    </select>
+    
+    <select id="SQL_validaUsuario"  parameterType="UsuarioMyBatis" resultType="UsuarioMyBatis">
+        select * from tb_usuario where usuario=#{usuario} and clave=#{clave}
+    </select>
+    
+    <select id="SP_validarLogueo" parameterType="UsuarioMyBatis" resultType="UsuarioMybatis">
+            CALL usp_buscausuario(#{usuario},#{clave})
+    </select>
+    
+    <delete id="SQL_eliminarUsuario" parameterType="string">
+        delete from tb_usuario where usuario=#{_usuario}
+    </delete>
+    
+    
+    <update id="SQL_actualizarUsuario" parameterType="UsuarioMyBatis">
+	    UPDATE 
+	           tb_usuario 
+	    SET
+		  clave = #{clave},
+		  nombre = #{nombre},
+		  apellido = #{apellido},
+		  facceso = #{fechaAcceso},
+		  idestado = #{estado.idEstado}
+	    WHERE usuario = #{usuario} 
+    </update>
+    
+    <insert id="SQL_registrarUsuario" parameterType="UsuarioMyBatis">
+					INSERT INTO 
+					           tb_usuario
+					VALUES
+					(
+							    #{usuario},
+							    #{clave},
+							    #{nombre},
+							    #{apellido},
+							    #{fechaAcceso},
+							    #{estado.idEstado}
+					) 
+    </insert>
+    
+</mapper>

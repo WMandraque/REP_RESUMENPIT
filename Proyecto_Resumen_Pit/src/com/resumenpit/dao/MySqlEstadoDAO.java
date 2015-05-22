@@ -1,7 +1,6 @@
 package com.resumenpit.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,31 +8,28 @@ import java.util.List;
 
 
 
+
+
+import mybatis.MyBatisFactorySqlSession;
+
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.resumenpit.interfaces.EstadoDAO;
 import com.resumenpit.models.EstadoDTO;
-import com.resumenpit.utils.GenericDAOImpl;
-import com.resumenpit.utils.SQLMyBatisMapper;
 
-public class MySqlEstadoDAO extends GenericDAOImpl implements EstadoDAO {
+public class MySqlEstadoDAO extends MyBatisFactorySqlSession  implements EstadoDAO {
 
-	PreparedStatement pst=null;
-	ResultSet rs=null;
-	
+
 	
 	
 	@Override
 	public List<EstadoDTO> listarEstados() 
 	{
-		List<EstadoDTO> listadoEstados=new ArrayList<EstadoDTO>();
-		SqlSession session=new SQLMyBatisMapper().getSession().openSession();
-		
+		List<EstadoDTO> listadoEstados=new ArrayList<EstadoDTO>();		
 		try 
 		{
 			//Creamos un Objeto de tipo SqlSessionFactory e inicializamos
-			listadoEstados=session.selectList("EstadoSQL.SQL_listaEstados");
+			listadoEstados=abrirSession().selectList("EstadoSQL.SQL_listaEstados");
 			
 		} 
 		catch (Exception e) 
@@ -42,7 +38,7 @@ public class MySqlEstadoDAO extends GenericDAOImpl implements EstadoDAO {
 		}
 		finally
 		{
-		 session.close();
+		 cerrarSession();
 		}
 
 		return listadoEstados;

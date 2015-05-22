@@ -39,8 +39,9 @@
 			<td><s:property value="clave"/></td>
 			<td><s:property value="nombre"/></td>
 			<td><s:property value="apellido"/></td>
-			<td><s:property value="fechaAcceso"/></td>
-			<td><s:if test="estado==1">Disponible</s:if><s:else>No Disponible</s:else>
+			<td><s:property value="fechaCadena"/></td>
+			<!-- <s:if test="estado==1">Disponible</s:if><s:else>No Disponible</s:else> -->
+			<td><s:property value="estado.descripcion"/>
 			<td>
 			    <!-- alistamos la preparacion de un action, y le asignamos el id para llamarlo como url -->
 			    <s:url action="cargarUsuario" id="actualizar">

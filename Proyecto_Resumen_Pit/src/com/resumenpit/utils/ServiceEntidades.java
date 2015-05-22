@@ -1,4 +1,4 @@
-package extras;
+package com.resumenpit.utils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +7,6 @@ import javax.sql.rowset.CachedRowSet;
 
 import org.apache.catalina.webresources.CachedResource;
 
-import com.resumenpit.utils.GenericDAOImpl;
 import com.sun.rowset.CachedRowSetImpl;
 
 
